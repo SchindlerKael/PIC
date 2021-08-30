@@ -1,0 +1,13 @@
+a {
+    text-decoration: none;
+}
+
+header{
+    background: #144084;
+    color: #fff;
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+

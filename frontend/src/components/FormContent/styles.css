@@ -1,0 +1,11 @@
+.item {
+  flex: 1;
+  margin: 10px;
+  min-width: 400px;
+}
+
+.form-content {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-evenly;
+}
