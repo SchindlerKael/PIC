@@ -11,7 +11,9 @@ export default ({data, answer, checkResult}) => {
 
     const mountMatrice  = () => {
         let header = [['horas','Experimento', 'Aluno 1', 'Resultado' ]];
+
         let experiment = Array.from(data.entries());
+
         let body = experiment.map((array, i) => {
             if(i === experiment.length - 1)
                 return array.concat([array[1], array[1]]);
@@ -21,7 +23,7 @@ export default ({data, answer, checkResult}) => {
         if(answer.length !== 0) {
             answer.map((weight, i) => {
                 let corretion = !checkResult ? null : body[body.length-1][3] * result[i];
-                return body.push([body.length, null, body[body.length-1][2] * 1.2, corretion]);
+                return body.push([body.length, null, body[body.length-1][2] * weight, corretion]);
             })
         }
         return header.concat(body);
