@@ -5,6 +5,12 @@ const authConfig = require('../config/auth.json');
 
 
 module.exports = {
+    async index(req, res) {
+        const users = await User.findAll();
+    
+        return res.json(users);
+    },
+
     async store(req, res) {
         try {
             const { name, email, password } = req.body;
