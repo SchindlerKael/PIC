@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Role = require('../models/Role');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth.json');
@@ -30,7 +31,21 @@ module.exports = {
         try {
             const { email, password } =  req.body;
 
-            user = await User.findOne({where: { email: email }});
+            // const user = await User.findOne({where: { email: email }});
+            const user = await User.findOne({
+                attributes: ['id', 'name', 'email', 'password'],
+                where: { email: email },
+                include: { 
+                    association: 'roles', 
+                    attributes: ['title'], 
+                    through: { attributes: [] },
+                    include: { 
+                        association: 'permissions', 
+                        attributes: ['title'], 
+                        through: { attributes: [] }
+                    }
+                }
+            });
 
             if(!user)
                 return res.status(400).send({ error: 'User not found' });

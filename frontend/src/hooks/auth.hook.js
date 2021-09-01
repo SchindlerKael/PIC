@@ -21,8 +21,10 @@ export default function useAuth() {
   
   async function handleLogin(values) {
     try {
-      const { data: { token } } = await api.post('/authenticate', values);
-        
+      const { data: { token, user } } = await api.post('/authenticate', values);
+      user.roles.push({title: "teste"});
+      localStorage.setItem('user', JSON.stringify(user));
+
       localStorage.setItem('token', JSON.stringify(token));
       api.defaults.headers.Authorization = `Bearer ${token}`;
       setAuthenticated(true);
@@ -35,9 +37,23 @@ export default function useAuth() {
   function handleLogout() {
     setAuthenticated(false);
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     api.defaults.headers.Authorization = undefined;
     history.push('/login');
   }
   
   return { authenticated, loading, handleLogin, handleLogout };
+}
+
+export function useLocalUser(){
+  const [user, setUser] = useState({name:'', roles: []});
+
+  useEffect(() => {
+    const local_user = JSON.parse(localStorage.getItem('user'));
+
+    if (local_user) 
+        setUser(local_user);
+  }, []);
+
+  return user;
 }
