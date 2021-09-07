@@ -3,24 +3,44 @@ import React, { useContext } from "react";
 import "./styles.css";
 
 import { AuthContext } from '../../store/auth.context.js';
+import { useDropDown } from '../../hooks/dropdown.hook';
 
 import Button from "../../components/Button";
 import UserCard from "../../components/UserCard";
+import HeaderDropDown from '../HeaderDropDown';
+import HeaderLink from '../HeaderLink';
 
+import { AiOutlineMenu} from 'react-icons/ai';
+import { AiOutlineClose} from 'react-icons/ai';
 
 const Header = () => {
 
-    const { handleLogout  } = useContext(AuthContext);
+    const [{ dropdown, dropdownRef }, toggleDropdown] = useDropDown ();
+
+    const { handleLogout } = useContext(AuthContext);
     
     return(
     <div>
         <header>
-            <Button label="Fisiologia Animal" />
+            <li onClick={toggleDropdown}><label className="btn-open"> <AiOutlineMenu/> Abrir</label></li>
+            
+            <h2>Fisiologia Animal</h2>
             <div className="user-info">
                 <UserCard />
                 <Button label="Sair" onClick={handleLogout} />
             </div>
         </header>
+        <nav id="menu"  className={`${dropdown}`}>
+            <li><label className="btn-close"> <AiOutlineClose/> Fechar</label></li>
+            <ul ref={dropdownRef}>
+                <HeaderDropDown name="Experimentos">
+                    <HeaderLink to="/experiment/list" name="Listagem de experimentos"/>
+                    <HeaderLink name="item 1.2"/>
+                </HeaderDropDown>           
+                <HeaderLink to="/" name="Principal"/>
+                <HeaderLink name="item 3"/>
+            </ul>
+        </nav>
     </div>
     )
 };

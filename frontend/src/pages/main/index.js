@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 
 import './styles.css';
 
@@ -57,7 +57,7 @@ const Main = (props) => {
                         onClick={() => setCheckResult(!checkResult)} 
                     />
                 </div>
-                <Chart data={[37.8, 30.9, 25.4, 11.7]} answer={answer} checkResult={checkResult} />
+                <Chart /*data={[37.8, 30.9, 25.4, 11.7]}*/ answer={answer} checkResult={checkResult} />
             </div>
         </Container>
         <Footer />

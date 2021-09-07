@@ -2,13 +2,15 @@ import React, {useState} from 'react'
 
 import Button from "../../components/Button/index";
 
-import {useDropDown, useOptionList} from '../../hooks/optionList.hook';
+import {useOptionList} from '../../hooks/optionList.hook';
+import {useDropDown } from '../../hooks/dropdown.hook';
+
 
 import "./styles.css";
 
 const OptionGroup = (props) => {
 
-  const [{ dropdown, dropdownRef }, toggleDropdown] = useDropDown();
+  const [{ dropdown }, toggleDropdown] = useDropDown();
 
   const {options, setOptions} = useOptionList();
 
@@ -32,7 +34,7 @@ const OptionGroup = (props) => {
         <label>{selectedOption != null && options[selectedOption].name}</label>
       </div>
         
-      <div ref={dropdownRef} className={`${dropdown} options-list`}>       
+      <div /*ref={dropdownRef}*/ className={`${dropdown} options-list`}>       
         <ul>
           {options.map((option, i) => {
             return(

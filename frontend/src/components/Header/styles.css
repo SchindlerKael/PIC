@@ -1,7 +1,3 @@
-a {
-    text-decoration: none;
-}
-
 header{
     background: #144084;
     color: #fff;
@@ -16,3 +12,45 @@ header{
     display: flex;
 }
 
+a {
+    text-decoration: none;
+}
+
+li{
+    list-style:none;
+}
+
+.btn-open, .btn-close{
+    transition: all 0.5s;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 10px;
+}
+
+.btn-open:hover, .btn-close:hover{
+    color: #969492;
+    background: white;
+}
+
+svg:first-child {
+    margin-right: 10px;
+}
+
+nav{
+    display: none;
+    height: 100%;
+    max-width: 300px;
+    /* width: 0; */
+    background: #2cb79a;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    /* display: flex; */
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    transition: width 0.3s;
+}

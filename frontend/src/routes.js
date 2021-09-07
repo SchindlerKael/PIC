@@ -4,6 +4,7 @@ import { /*BrowserRouter,*/ Switch, Route, Redirect } from 'react-router-dom';
 import { AuthContext } from './store/auth.context.js';
 
 import Main from "./pages/main";
+import ExperimentList from "./pages/ExperimentList";
 import Login from './pages/login';
 
 function CustomRoute({ isPrivate, ...rest }) {
@@ -24,6 +25,8 @@ const Routes = () => (
   <Switch>
       <CustomRoute exact path="/login" component={Login} />
       <CustomRoute isPrivate exact path="/" component={Main} />
+      <CustomRoute isPrivate exact path="/experiment/list" component={ExperimentList} />
+
   </Switch>
 );
 

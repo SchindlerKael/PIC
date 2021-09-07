@@ -1,0 +1,12 @@
+nav li a {
+    color: white;
+    font-size: 20px;
+    padding: 12px 10px 12px 32px;
+    display:flex;
+    white-space: wrap;
+}
+
+nav li :first-child:hover {
+    color: #969492;
+    background: white;
+}
