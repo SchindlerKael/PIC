@@ -20,7 +20,19 @@ class User extends Model {
     }
 
     static associate(models) {
+        const user_answers = this.sequelize.define('user_answers', {
+            option_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                // references: { model: 'options', key: 'id' },
+                // onUpdate: 'CASCADE',
+                // onDelete: 'CASCADE',
+              },        
+        }, { timestamps: true });
+
         this.belongsToMany(models.Role, { foreignKey: 'user_id', through: 'user_roles', as: 'roles' });
+        this.hasMany(models.Experiment, { foreignKey: 'user_id', as: 'experiments' });
+        this.belongsToMany(models.Experiment, { foreignKey: 'user_id', through: user_answers, as: 'answers' });
     }
 }
 

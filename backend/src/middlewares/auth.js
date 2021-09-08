@@ -20,7 +20,7 @@ function validate(req, res, next) {
   jwt.verify(token, authConfig.secret, (error, decoded) =>{
     if(error) return res.status(401).send({ error: 'Token invalid' });
 
-    req.userId = decoded.id;
+    req.user_id = decoded.id;
     return next();
   });  
 }

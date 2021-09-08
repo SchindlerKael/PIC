@@ -12,7 +12,6 @@ module.exports = {
     async store(req, res) {
         try {
             const { title, permissions } = req.body;
-            console.log(req.body);
 
             if(await Role.findOne({where: { title: title }}))
                 return res.status(400).send({ error: 'Role title already exists' });

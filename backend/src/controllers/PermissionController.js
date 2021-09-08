@@ -1,4 +1,5 @@
 const Permission = require('../models/Permission');
+const User = require('../models/User');
 
 module.exports = {
     async index(req, res) {
@@ -21,5 +22,4 @@ module.exports = {
             return res.status(400).send({ error: 'Registration failed' });
         }
     },
-
 }
