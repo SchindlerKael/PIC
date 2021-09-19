@@ -1,8 +1,3 @@
-.page-title {
-    margin-bottom: 20px;
-    color: #144084;
-}
-
 .experiment-card {
     display: flex;
     flex-direction: column;
@@ -11,32 +6,25 @@
     background: #FFF;
     border: 1px solid #2cb79a;;
     border-radius: 4px;
-    transition: all 0.5s;
-    cursor: pointer;
+    color: black;
 }
-.experiment-card:hover{
-    -webki-filter: drop-shadow(5px 5px 5px rgba(0,0,0,.5));
-    filter: drop-shadow(5px 5px 5px rgba(0,0,0,.5));
-}
-
 .experiment-card .card-header {
     display: flex;
     justify-content: space-between;
     align-content: flex-start;
 }
-
 .experiment-card .experiment-open:before{
     content: 'Aberto';
-    color: green;
-}
-.experiment-card .experiment-closed:before{
-    content: 'Fechado';
-    color: red;
-}
-.experiment-card label {
     text-align: right;
     font-weight: bold;
-    cursor: pointer;
+    color: green;
+}
+
+.experiment-card .experiment-closed:before{
+    content: 'Fechado';
+    text-align: right;
+    font-weight: bold;
+    color: red;
 }
 
 

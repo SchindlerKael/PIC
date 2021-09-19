@@ -8,6 +8,10 @@ header{
     justify-content: space-between;
 }
 
+header h2 {
+    text-align: center;
+}
+
 .user-info {
     display: flex;
 }
@@ -27,6 +31,7 @@ li{
     align-items: center;
     color: white;
     padding: 10px;
+    cursor: pointer;
 }
 
 .btn-open:hover, .btn-close:hover{

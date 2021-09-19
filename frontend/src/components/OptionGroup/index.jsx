@@ -38,8 +38,8 @@ const OptionGroup = (props) => {
         <ul>
           {options.map((option, i) => {
             return(
-              <li className={option.used ? "hide" : ""}> 
-                <label for={`${props.id}-${i}`} onClick={() => UpdateList(i)}>{option.name}</label>
+              <li key={i.toString()} className={option.used ? "hide" : ""}> 
+                <label htmlFor={`${props.id}-${i}`} onClick={() => UpdateList(i)}>{option.name}</label>
                 <input 
                   type="radio" 
                   id={`${props.id}-${i}`} 

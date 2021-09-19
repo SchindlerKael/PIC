@@ -74,7 +74,7 @@ export default ({answer, checkResult}) => {
                             title: 'Experimento Teste',
                             subtitle: 'em mililitros (ml)',
                         },
-                        hAxis: { title: 'Time (s)', viewWindow: { min: 0, max: pointsOnChart } },
+                        hAxis: { title: 'Time (s)', viewWindow: { min: 0, max: pointsOnChart-1 } },
                         vAxis: { title: 'Volume (ml)'},
                     }}
                     rootProps={{ 'data-testid': '3' }}

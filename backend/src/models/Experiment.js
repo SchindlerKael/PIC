@@ -8,6 +8,7 @@ class Experiment extends Model {
             expected_rate: DataTypes.FLOAT,
             event_rate: DataTypes.FLOAT,
             initial_value: DataTypes.FLOAT,
+            is_closed: DataTypes.BOOLEAN,
         }, {
         sequelize,
         tableName: 'experiments',

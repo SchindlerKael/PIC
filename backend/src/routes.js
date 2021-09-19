@@ -30,6 +30,7 @@ routes.get('/options', OptionController.index);
 routes.post('/options', OptionController.store);
 
 routes.get('/experiments', ExperimentController.index);
+routes.get('/experiments/:experiment_id', ExperimentController.getExperiment);
 routes.post('/experiments', ExperimentController.store);
 routes.post('/experiments/:experiment_id/answer', ExperimentController.answer);
 

@@ -4,7 +4,7 @@ import "./styles.css";
 
 import { useLocalUser } from '../../hooks/auth.hook.js';
 
-const Header = () => {    
+const UserCard = () => {    
     const user = useLocalUser();
 
     return(
@@ -15,4 +15,4 @@ const Header = () => {
     )
 };
 
-export default Header;
+export default UserCard;

@@ -20,7 +20,7 @@ const Header = () => {
     const { handleLogout } = useContext(AuthContext);
     
     return(
-    <div>
+    <>
         <header>
             <li onClick={toggleDropdown}><label className="btn-open"> <AiOutlineMenu/> Abrir</label></li>
             
@@ -33,15 +33,14 @@ const Header = () => {
         <nav id="menu"  className={`${dropdown}`}>
             <li><label className="btn-close"> <AiOutlineClose/> Fechar</label></li>
             <ul ref={dropdownRef}>
+                <HeaderLink to="/" name="Principal"/>
                 <HeaderDropDown name="Experimentos">
                     <HeaderLink to="/experiment/list" name="Listagem de experimentos"/>
-                    <HeaderLink name="item 1.2"/>
+                    <HeaderLink to="/experiment/create" name="Criar Experimento"/>
                 </HeaderDropDown>           
-                <HeaderLink to="/" name="Principal"/>
-                <HeaderLink name="item 3"/>
             </ul>
         </nav>
-    </div>
+    </>
     )
 };
 

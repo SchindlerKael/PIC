@@ -6,7 +6,6 @@ import api from '../../services/api';
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Container from "../../components/Container";
-import ExperimentCards from "../../components/ExperimentCards";
 
 
 const ExperimentList = (props) => { 
@@ -20,13 +19,13 @@ const ExperimentList = (props) => {
         })();
     }, []);
 
+    console.log(experiments);
     return (
         <>
         <Header />
         <Container style={{justifyContent: 'left',}}>
             <div>
-                <h1 className="page-title">Listagem de Experimentos</h1>
-                <ExperimentCards experiments={experiments} />
+                <h1 className="page-title">Criar experimento</h1>
             </div>
         </Container>
         <Footer />

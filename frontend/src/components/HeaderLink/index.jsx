@@ -6,7 +6,7 @@ import "./styles.css";
 export default (props) => {
   
     return (
-    <li><Link to={props.to}> { props.name } </Link></li>
+    <li><Link {...props}> { props.name } </Link></li>
     );
 };
 

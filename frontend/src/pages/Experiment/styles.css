@@ -1,0 +1,30 @@
+.item {
+    flex: 1;
+    margin: 10px;
+    min-width: 400px;
+}
+
+.view-content {
+    align-self: flex-end;
+}
+
+.title-content {
+    flex: 1;
+    word-break: break-word;
+}
+
+.option-groups {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.button-content {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.check-content {
+    padding: 5px 0;
+}

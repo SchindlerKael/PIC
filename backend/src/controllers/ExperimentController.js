@@ -1,10 +1,44 @@
 const Experiment = require('../models/Experiment');
+const Sequelize = require('sequelize');
 const Option = require('../models/Option');
 const User = require('../models/User');
 
 module.exports = {
     async index(req, res) {
-        const experiments = await Experiment.findAll();
+        const experiments = await Experiment.findAll({
+            attributes: { 
+                include: [[Sequelize.fn("COUNT", Sequelize.fn("DISTINCT", Sequelize.col("users.id"))), "answerCount"]] 
+            },
+            include: [{ 
+                association: 'user', 
+                attributes: ['name'], 
+            },{
+                association: 'users', 
+                attributes: [],
+                through: { attributes: [] }
+            }],
+        group: ['Experiment.id', 'user.id']
+        });
+    
+        return res.json(experiments);
+    },
+
+    async getExperiment(req, res) {
+        const { experiment_id } = req.params;
+
+        const experiments = await Experiment.findOne({
+            where: {
+                id: experiment_id,
+            },
+            include: [{ 
+                association: 'user', 
+                attributes: ['name'], 
+            },{
+                association: 'options', 
+                attributes: ['name'],
+                through: { attributes: ['weight', 'correct_answer'] }
+            }],
+        });
     
         return res.json(experiments);
     },
