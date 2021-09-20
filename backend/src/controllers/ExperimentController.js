@@ -36,7 +36,7 @@ module.exports = {
             },{
                 association: 'options', 
                 attributes: ['name'],
-                through: { attributes: ['weight', 'correct_answer'] }
+                through: { attributes: ['weight', 'correct_answer'] },
             }],
         });
     

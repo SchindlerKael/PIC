@@ -11,6 +11,10 @@ export function useResult() {
   const context = useContext(OptionListContext);
   const {options} = context;
 
-  return [options[0].value, options[1].value, options[2].value];
+  if(options) {
+    return options
+      .filter(option => option.experiment_options.correct_answer)
+      .map(option => option.experiment_options.weight);
+  }
 }
   

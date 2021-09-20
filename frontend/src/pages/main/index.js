@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import './styles.css';
 
@@ -11,7 +11,7 @@ const Main = (props) => {
     return (
         <>
         <Header />
-        <h1>You are Home!</h1>
+        <h1 style={{textAlign: 'center'}}>You are Home!</h1>
         <Footer />
         </>
     )

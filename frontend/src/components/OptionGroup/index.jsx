@@ -44,7 +44,7 @@ const OptionGroup = (props) => {
                   type="radio" 
                   id={`${props.id}-${i}`} 
                   name={props.id} 
-                  value={option.value}
+                  value={option.experiment_options.weight}
                   onChange={props.handleChange}
                 />
               </li>

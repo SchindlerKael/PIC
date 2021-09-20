@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import './styles.css';
+
+import api from '../../services/api';
 
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -12,25 +14,34 @@ import Chart from "../../components/Chart";
 import OptionGroup from "../../components/OptionGroup";
 
 import useForm from '../../hooks/form.hook';
+import {useOptionList, useResult} from '../../hooks/optionList.hook';
 
 const Main = (props) => {
-    // const {id} = props.match.params;
-    // const [experiment, setExperiment] = useState([]);
-
-    // useEffect(() => {
-    //     (async () => {
-    //         const { data } = await api.get('/experiments/'+id);
-    //         setExperiment(data);
-    //     })();
-    // }, []);
-
-    // console.log(id);
-
     const [{ values, loading }, handleChange, handleSubmit] = useForm();
-
     const [answer, setAnswer] =  useState([]);
     const [hideResultButton, setHideResultButton] =  useState(true);
     const [checkResult, setCheckResult] =  useState(false);
+
+    const {id} = props.match.params;
+    const [experiment, setExperiment] = useState([]);
+    const {setOptions} = useOptionList();
+    const result = useResult();
+
+    useEffect(() => {
+        (async () => {
+            const { data } = await api.get('/experiments/'+id);
+            setExperiment(data);
+        })();
+    }, [id]);
+    
+    useEffect(() => {
+        if(experiment.options){
+            setOptions(experiment.options.map((option) => {
+                option.used = false;
+                return option
+            }));
+        }
+    }, [experiment.options]);
 
     const sendOptions = () => {
         setAnswer([values.b1, values.b2, values.b3]);
@@ -43,8 +54,8 @@ const Main = (props) => {
         <Container>
             <FormContent>
                 <div className="title-content">
-                    <h1>Variação de água corporal</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum consequat ligula, et sagittis tellus interdum quis. Cras quis cursus libero. Maecenas in urna odio. Mauris non commodo metus.</p>
+                    <h1>{experiment.title}</h1>
+                    <p>{experiment.suport_text}</p>
                 </div>
                 <form onSubmit={handleSubmit(sendOptions)}>
                     <div className="option-groups">
@@ -58,16 +69,22 @@ const Main = (props) => {
                 </form>
             </FormContent>
             <div className="item view-content">
-                <div className={`${hideResultButton ? "hide" : "show"} check-content`}>
-                    <ToggleButton 
-                        label1="Conferir Resposta" 
-                        label2="Ocultar Resposta" 
-                        value={checkResult}
-                        disabled={false}
-                        onClick={() => setCheckResult(!checkResult)} 
-                    />
-                </div>
-                <Chart /*data={[37.8, 30.9, 25.4, 11.7]}*/ answer={answer} checkResult={checkResult} />
+                {!hideResultButton && 
+                <ToggleButton 
+                    label1="Conferir Resposta" 
+                    label2="Ocultar Resposta" 
+                    value={checkResult}
+                    disabled={false}
+                    onClick={() => setCheckResult(!checkResult)} 
+                />}
+                <Chart
+                    initial_value = {experiment.initial_value}
+                    expected_rate = {experiment.expected_rate}
+                    event_rate = {experiment.event_rate}
+                    answer={answer} 
+                    result={result}
+                    checkResult={checkResult} 
+                />
             </div>
         </Container>
         <Footer />

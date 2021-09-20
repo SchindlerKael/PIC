@@ -5,22 +5,24 @@ import {useResult} from '../../hooks/optionList.hook';
 
 import "./styles.css";
 
-export default ({answer, checkResult}) => { 
-
-    const x = 0.9;
-    const y = 0.5;
+export default (props) => {
     const pointsOnChart = 10;
-    const initialValue = 1200;
 
-    const result = useResult();
+    const result = props.result;
+    const answer = props.answer;
+    const checkResult = props.checkResult;
+
+    const initialValue = props.initial_value;
+    const expectedRate = props.expected_rate;
+    const eventRate = props.event_rate;
 
     const WeightCalculation = (total, weight) => {
         return parseFloat(total) + parseFloat(weight);
     }
 
     const chartFunction = (weight) => {
-        const z = x - y;
-        return (y + z * weight);
+        const variationRate = expectedRate - eventRate;
+        return (eventRate + variationRate * weight);
     }
 
     const generateData = () => {
@@ -28,7 +30,7 @@ export default ({answer, checkResult}) => {
         let value = initialValue;
 
         for(let i = 0; i < pointsOnChart/2; i++ ) {
-            value = value * chartFunction(y);
+            value = value * (i == 0 ? 1 : eventRate);
             data.push(value); 
         }
         return data;
@@ -75,7 +77,7 @@ export default ({answer, checkResult}) => {
                             subtitle: 'em mililitros (ml)',
                         },
                         hAxis: { title: 'Time (s)', viewWindow: { min: 0, max: pointsOnChart-1 } },
-                        vAxis: { title: 'Volume (ml)'},
+                        vAxis: { title: 'Volume (ml)' },
                     }}
                     rootProps={{ 'data-testid': '3' }}
                 />
