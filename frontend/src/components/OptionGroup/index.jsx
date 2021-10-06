@@ -16,7 +16,7 @@ const OptionGroup = (props) => {
 
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const UpdateList  = (i) => {
+  const handleUpdateList  = (i) => {
     let rows = options;
     if(selectedOption != null)
       rows[selectedOption].used = !rows[selectedOption].used;
@@ -39,7 +39,7 @@ const OptionGroup = (props) => {
           {options.map((option, i) => {
             return(
               <li key={i.toString()} className={option.used ? "hide" : ""}> 
-                <label htmlFor={`${props.id}-${i}`} onClick={() => UpdateList(i)}>{option.name}</label>
+                <label htmlFor={`${props.id}-${i}`} onClick={() => handleUpdateList(i)}>{option.name}</label>
                 <input 
                   type="radio" 
                   id={`${props.id}-${i}`} 

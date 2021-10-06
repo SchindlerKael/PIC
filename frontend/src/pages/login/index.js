@@ -5,7 +5,8 @@ import './styles.css';
 import { AuthContext } from '../../store/auth.context.js';
 
 import Button from "../../components/Button";
-import Input from "../../components/Input";
+import {Input} from "../../components/Field";
+import FieldContent from "../../components/FieldContent";
 import Container from "../../components/Container";
 import FormContent from "../../components/FormContent";
 
@@ -25,9 +26,17 @@ export default function Login() {
             <img src={logoPic} />
           </div>
           <form onSubmit={handleSubmit(handleLogin, values)}>
-            <Input label={"Usuário"} type={"text"} name="email" onChange={handleChange} />
-            <Input label={"Senha"} type={"password"} name="password" onChange={handleChange} />
+
+            <FieldContent label="Usuário">
+              <Input type={"text"} name="email" onChange={handleChange} />
+            </FieldContent>
+
+            <FieldContent label="Senha">
+              <Input type={"password"} name="password" onChange={handleChange} />
+            </FieldContent>
+
             <Button label="Entrar" onClick={null} submit={true} />
+
           </form>
         </FormContent>
       </Container>

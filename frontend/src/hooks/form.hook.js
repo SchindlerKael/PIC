@@ -3,10 +3,28 @@ import { useState } from 'react';
 const useForm = (callback) => {
     const [values, setValues] = useState({});
     const [loading, setLoading] = useState(false);
+
+    const handleValue = (event) => {
+      if(event.target.type == 'checkbox' || event.target.type == 'radio') {
+        if(!event.target.checked)
+          return null;
+      }
+      return event.target.value;
+    }
   
     const handleChange = (event) => {
       const auxValues = { ...values };
-      auxValues[event.target.name] = event.target.value;
+
+      let name_decomposition  = event.target.name.replace(/]/g, '').split('[')
+    
+      if(name_decomposition.length > 1) {
+        const attribute = name_decomposition.shift();
+       
+        auxValues[attribute] = auxValues[attribute] ? [...auxValues[attribute]] : [];
+        auxValues[attribute][parseInt(name_decomposition[0])] = {...auxValues[attribute][parseInt(name_decomposition[0])]}
+        auxValues[attribute][parseInt(name_decomposition[0])][name_decomposition[1]] = handleValue(event);
+      }else
+        auxValues[event.target.name] = handleValue(event);
       setValues(auxValues);
     };
   

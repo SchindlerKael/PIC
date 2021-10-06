@@ -8,13 +8,13 @@ import "./styles.css";
 
 const ExperimentCards = (props) => {    
     const experiments = props.experiments;
-
+    
     const listItems = experiments.map((experiment) => {
         return (
             <Link key={experiment.id.toString()} to={`/experiment/${experiment.id} `} > 
                 <div className="experiment-card">
                     <div className="card-header">
-                        <div>
+                        <div className="experiment-name">
                             <h3>{experiment.title}</h3>
                             <h4>Professor(a) {experiment.user.name}</h4>
                         </div>

@@ -27,7 +27,9 @@ const ExperimentList = (props) => {
         <Container style={{justifyContent: 'left',}}>
             <div>
                 <h1 className="page-title">Listagem de Experimentos</h1>
-                <ExperimentCards experiments={experiments} />
+                <div className="card-container">
+                    <ExperimentCards experiments={experiments} />
+                </div>
             </div>
         </Container>
         <Footer />

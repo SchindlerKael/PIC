@@ -7,25 +7,42 @@
     border: 1px solid #2cb79a;;
     border-radius: 4px;
     color: black;
+    cursor: pointer;
+    margin: 10px;
 }
+
+.experiment-card:hover{
+    -webki-filter: drop-shadow(5px 5px 5px rgba(0,0,0,.5));
+    filter: drop-shadow(5px 5px 5px rgba(0,0,0,.5));
+}
+
 .experiment-card .card-header {
     display: flex;
     justify-content: space-between;
     align-content: flex-start;
 }
+.experiment-card .experiment-name {
+    margin-right: 50px;
+}
+
 .experiment-card .experiment-open:before{
     content: 'Aberto';
     text-align: right;
     font-weight: bold;
     color: green;
 }
-
 .experiment-card .experiment-closed:before{
     content: 'Fechado';
     text-align: right;
     font-weight: bold;
     color: red;
 }
+.experiment-card label {
+    text-align: right;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 
 
 .experiment-card p {

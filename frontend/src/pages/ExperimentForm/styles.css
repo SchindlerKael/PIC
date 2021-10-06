@@ -2,3 +2,79 @@
     margin-bottom: 20px;
     color: #144084;
 }
+.split-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.part-form {
+    min-width: 400px;
+    flex: 1;
+    margin: 5px;
+}
+
+.flex-end {
+    align-self: flex-end;
+}
+
+.field-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.field-group div {
+    margin: 0 10px;
+}
+.field-group div:first-child {
+    margin-left: 0;
+}
+.field-group div:last-child {
+    margin-right: 0;
+}
+
+.option-select option {
+    margin: 10px auto;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 10px 5px;
+    width: 100%;
+    min-height: 50px;
+}
+.option-select option:hover {
+    background: #ccc;
+    border: 1px solid #2cb79a;
+}
+
+.option-field-set {
+    display: flex;
+    align-items: flex-end;
+    border: 1px solid #2cb79a;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+.option-field-set legend {
+    font-weight: bold;
+}
+.option-field-set div {
+    margin: 0 10px;
+}
+.option-field-set div:first-child {
+    margin-left: 0;
+}
+.option-field-set div:last-child {
+    margin-right: 0;
+}
+
+.scroll-panel {
+    flex: 1;
+    overflow-y: scroll;
+    height: 30vh;
+    border: 1px solid #888;
+    border-radius: 4px;
+    padding: 10px;
+    background: #fff;
+}
+
+
