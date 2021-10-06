@@ -44,7 +44,7 @@ const Main = (props) => {
     }, [experiment.options]);
 
     const sendOptions = () => {
-        setAnswer([values.b1, values.b2, values.b3]);
+        setAnswer(Object.values(values));
         setHideResultButton(false);
     };
 
@@ -59,9 +59,9 @@ const Main = (props) => {
                 </div>
                 <form onSubmit={handleSubmit(sendOptions)}>
                     <div className="option-groups">
-                        <OptionGroup handleChange={handleChange} id="b1" label="B1" />
-                        <OptionGroup handleChange={handleChange} id="b2" label="B2" />
-                        <OptionGroup handleChange={handleChange} id="b3" label="B3" />
+                        {result.map((value, i) => {
+                            return <OptionGroup handleChange={handleChange} id={"b"+(i+1)} label={"B"+(i+1)} />
+                        })}
                     </div>
                     <div className="button-content">
                         <Button label="Enviar" onClick={() => null} submit={true}/>

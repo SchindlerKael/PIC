@@ -19,10 +19,15 @@ const useForm = (callback) => {
     
       if(name_decomposition.length > 1) {
         const attribute = name_decomposition.shift();
-       
-        auxValues[attribute] = auxValues[attribute] ? [...auxValues[attribute]] : [];
-        auxValues[attribute][parseInt(name_decomposition[0])] = {...auxValues[attribute][parseInt(name_decomposition[0])]}
-        auxValues[attribute][parseInt(name_decomposition[0])][name_decomposition[1]] = handleValue(event);
+        if(parseInt(name_decomposition[0]) != 'NaN'){
+          console.log(event.target.name);
+          console.log(`${attribute}[${parseInt(name_decomposition[0])}] = ${handleValue(event)}`);
+          auxValues[attribute] = auxValues[attribute] ? [...auxValues[attribute]] : [];
+          auxValues[attribute][parseInt(name_decomposition[0])] = handleValue(event);
+        }else{
+          auxValues[attribute] = {...auxValues[attribute]}
+          auxValues[attribute][name_decomposition[0]] = handleValue(event);
+        }
       }else
         auxValues[event.target.name] = handleValue(event);
       setValues(auxValues);

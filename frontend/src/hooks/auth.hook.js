@@ -22,7 +22,6 @@ export default function useAuth() {
   async function handleLogin(values) {
     try {
       const { data: { token, user } } = await api.post('/authenticate', values);
-      user.roles.push({title: "teste"});
       localStorage.setItem('user', JSON.stringify(user));
 
       localStorage.setItem('token', JSON.stringify(token));

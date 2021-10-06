@@ -6,7 +6,7 @@ import {useResult} from '../../hooks/optionList.hook';
 import "./styles.css";
 
 export default (props) => {
-    const pointsOnChart = 10;
+    const pointsOnChart = 30;
 
     const result = props.result;
     const answer = props.answer;
@@ -15,22 +15,24 @@ export default (props) => {
     const initialValue = props.initial_value;
     const expectedRate = props.expected_rate;
     const eventRate = props.event_rate;
+    const deltaRate = expectedRate - eventRate;
 
     const WeightCalculation = (total, weight) => {
         return parseFloat(total) + parseFloat(weight);
     }
 
-    const chartFunction = (weight) => {
-        const variationRate = expectedRate - eventRate;
-        return (eventRate + variationRate * weight);
+    const chartFunction = (value, weight) => {
+        const newValue = value - (eventRate + (deltaRate * weight))
+        return newValue;
     }
 
     const generateData = () => {
         let data = [];
         let value = initialValue;
 
-        for(let i = 0; i < pointsOnChart/2; i++ ) {
-            value = value * (i == 0 ? 1 : eventRate);
+        data.push(value);
+        for(let i = 1; i < pointsOnChart/2; i++ ) {
+            value = chartFunction(value, 0);
             data.push(value); 
         }
         return data;
@@ -50,15 +52,15 @@ export default (props) => {
         });
 
         if(answer.length !== 0 && checkResult) {
-            const answerWeight = chartFunction(answer.reduce(WeightCalculation, 0));
-            const resultnWeight = chartFunction(result.reduce(WeightCalculation, 0));
+            console.log(answer)
+            const answerWeight = answer.reduce(WeightCalculation, 0);
+            const resultnWeight = result.reduce(WeightCalculation, 0);
 
             for(let i = 0; i < pointsOnChart/2; i++ ) {
-                const resultPoint = body[body.length-1][3] * resultnWeight;
-                const answerPoint = body[body.length-1][2] * answerWeight;
-                body.push([body.length, null, answerPoint.toFixed(3), resultPoint.toFixed(3)]);
+                const answerPoint = chartFunction(body[body.length-1][2], answerWeight);
+                const resultPoint = chartFunction(body[body.length-1][3], resultnWeight);
+            body.push([body.length, null, answerPoint.toFixed(3), resultPoint.toFixed(3)]);
             }
-            console.log(body);
         }
         return header.concat(body);
     }
@@ -72,12 +74,8 @@ export default (props) => {
                     loader={<div>Loading Chart</div>}
                     data={mountMatrice()}
                     options={{
-                        chart: {
-                            title: 'Experimento Teste',
-                            subtitle: 'em mililitros (ml)',
-                        },
                         hAxis: { title: 'Time (s)', viewWindow: { min: 0, max: pointsOnChart-1 } },
-                        vAxis: { title: 'Volume (ml)' },
+                        vAxis: { title: 'Volume (ml)', viewWindow: { min: 0, max: initialValue } },
                     }}
                     rootProps={{ 'data-testid': '3' }}
                 />

@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 
 const ExperimentList = (props) => {
 
-    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue } = useForm();
 
     const [options, setOptions] = useState([]);
 
