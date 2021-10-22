@@ -88,13 +88,22 @@ const ExperimentList = (props) => {
 
                             <div className="field-group">
                                 <FieldContent label="Valor inicial do Parâmetro">
-                                    <Input type="text" {...register("initial_value")} />
+                                    <div className="field-group">
+                                        <Input type="text" className="valor-input" {...register("initial_value")} />
+                                        <Input type="text" className="unidade-input" placeholder="Unidade"/>
+                                    </div>
                                 </FieldContent>
                                 <FieldContent label="Variação Experada">
-                                    <Input type="text" {...register("expected_rate")} />
+                                    <div className="field-group">
+                                        <Input type="text" className="valor-input" {...register("expected_rate")} />
+                                        <Input type="text" className="unidade-input" placeholder="Unidade"/>
+                                    </div>
                                 </FieldContent>
                                 <FieldContent label="Variação sem Intervenção">
-                                    <Input type="text" {...register("event_rate")} />
+                                    <div className="field-group">
+                                        <Input type="text" className="valor-input" {...register("event_rate")} />
+                                        <Input type="text" className="unidade-input" placeholder="Unidade"/>
+                                    </div>
                                 </FieldContent>
                             </div>
                         </div>

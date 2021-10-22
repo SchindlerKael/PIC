@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import './styles.css';
 
 import api from '../../services/api';
+import history from '../../history';
 
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -13,12 +14,11 @@ import FormContent from "../../components/FormContent";
 import Chart from "../../components/Chart";
 import OptionGroup from "../../components/OptionGroup";
 
-import useForm from '../../hooks/form.hook';
-import {useOptionList, useResult} from '../../hooks/optionList.hook';
+import { useForm } from "react-hook-form";
+import {useOptionList, useResult, useAnswer} from '../../hooks/optionList.hook';
 
 const Main = (props) => {
-    const [{ values, loading }, handleChange, handleSubmit] = useForm();
-    const [answer, setAnswer] =  useState([]);
+    const { register, handleSubmit } = useForm();
     const [hideResultButton, setHideResultButton] =  useState(true);
     const [checkResult, setCheckResult] =  useState(false);
 
@@ -26,10 +26,11 @@ const Main = (props) => {
     const [experiment, setExperiment] = useState([]);
     const {setOptions} = useOptionList();
     const result = useResult();
+    const answer = useAnswer();
 
     useEffect(() => {
         (async () => {
-            const { data } = await api.get('/experiments/'+id);
+            const { data } = await api.get(`/experiments/${id}`);
             setExperiment(data);
         })();
     }, [id]);
@@ -43,9 +44,18 @@ const Main = (props) => {
         }
     }, [experiment.options]);
 
-    const sendOptions = () => {
-        setAnswer(Object.values(values));
-        setHideResultButton(false);
+    const onSubmit = async data => {
+        console.log(data);
+        try {
+            const res = await api.post(`/experiments/${id}/answer`, data);
+            if(res){
+                alert( "Experimento Respondido!" );
+                setHideResultButton(false);
+            }
+            
+        } catch (error) {
+            alert( error.response.data.error );
+        }
     };
 
     return (
@@ -57,10 +67,10 @@ const Main = (props) => {
                     <h1>{experiment.title}</h1>
                     <p>{experiment.suport_text}</p>
                 </div>
-                <form onSubmit={handleSubmit(sendOptions)}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="option-groups">
                         {result.map((value, i) => {
-                            return <OptionGroup handleChange={handleChange} id={"b"+(i+1)} label={"B"+(i+1)} />
+                            return <OptionGroup {...register(`options[${i}]`)} label={"B"+(i+1)} />
                         })}
                     </div>
                     <div className="button-content">

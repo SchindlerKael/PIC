@@ -5,7 +5,6 @@ import Button from "../../components/Button/index";
 import {useOptionList} from '../../hooks/optionList.hook';
 import {useDropDown } from '../../hooks/dropdown.hook';
 
-
 import "./styles.css";
 
 const OptionGroup = (props) => {
@@ -37,15 +36,15 @@ const OptionGroup = (props) => {
       <div /*ref={dropdownRef}*/ className={`${dropdown} options-list`}>       
         <ul>
           {options.map((option, i) => {
+            const id = `${props.label}-${i}`;
             return(
               <li key={i.toString()} className={option.used ? "hide" : ""}> 
-                <label htmlFor={`${props.id}-${i}`} onClick={() => handleUpdateList(i)}>{option.name}</label>
+                <label htmlFor={id} onClick={() => handleUpdateList(i)}>{option.name}</label>
                 <input 
+                  {...props}
                   type="radio" 
-                  id={`${props.id}-${i}`} 
-                  name={props.id} 
-                  value={option.experiment_options.weight}
-                  onChange={props.handleChange}
+                  id={id}                  
+                  value={option.id}
                 />
               </li>
             )

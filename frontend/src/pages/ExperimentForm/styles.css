@@ -2,6 +2,14 @@
     margin-bottom: 20px;
     color: #144084;
 }
+.unidade-input {
+    flex: 1;
+}
+.valor-input {
+    flex: 1;
+    margin-right: 5px;
+}
+
 .split-form {
     display: flex;
     justify-content: space-between;
@@ -24,13 +32,13 @@
     justify-content: space-between;
     align-items: flex-end;
 }
-.field-group div {
+.field-group .field-content {
     margin: 0 10px;
 }
-.field-group div:first-child {
+.field-group .field-content:first-child {
     margin-left: 0;
 }
-.field-group div:last-child {
+.field-group .field-content:last-child {
     margin-right: 0;
 }
 

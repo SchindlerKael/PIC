@@ -31,10 +31,17 @@ export default (props) => {
         let value = initialValue;
 
         data.push(value);
-        for(let i = 1; i < pointsOnChart/2; i++ ) {
+
+        for(let i = 0; i < pointsOnChart/3; i++ ) {
+            value = chartFunction(value, 1);
+            data.push(value); 
+        }
+
+        for(let i = 0; i < pointsOnChart/3; i++ ) {
             value = chartFunction(value, 0);
             data.push(value); 
         }
+        
         return data;
     }
 
@@ -56,7 +63,7 @@ export default (props) => {
             const answerWeight = answer.reduce(WeightCalculation, 0);
             const resultnWeight = result.reduce(WeightCalculation, 0);
 
-            for(let i = 0; i < pointsOnChart/2; i++ ) {
+            for(let i = 0; i < pointsOnChart/3; i++ ) {
                 const answerPoint = chartFunction(body[body.length-1][2], answerWeight);
                 const resultPoint = chartFunction(body[body.length-1][3], resultnWeight);
             body.push([body.length, null, answerPoint.toFixed(3), resultPoint.toFixed(3)]);
@@ -74,7 +81,7 @@ export default (props) => {
                     loader={<div>Loading Chart</div>}
                     data={mountMatrice()}
                     options={{
-                        hAxis: { title: 'Time (s)', viewWindow: { min: 0, max: pointsOnChart-1 } },
+                        hAxis: { title: 'Time (s)', viewWindow: { min: 0, max: pointsOnChart } },
                         vAxis: { title: 'Volume (ml)', viewWindow: { min: 0, max: initialValue } },
                     }}
                     rootProps={{ 'data-testid': '3' }}

@@ -17,4 +17,15 @@ export function useResult() {
       .map(option => option.experiment_options.weight);
   }
 }
+
+export function useAnswer() {
+  const context = useContext(OptionListContext);
+  const {options} = context;
+
+  if(options) {
+    return options
+      .filter(option => option.used)
+      .map(option => option.experiment_options.weight);
+  }
+}
   
