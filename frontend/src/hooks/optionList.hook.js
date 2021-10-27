@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext} from 'react';
 import { OptionListContext } from "../store/optionList.context";
 
 export function useOptionList() {
@@ -6,6 +6,17 @@ export function useOptionList() {
   const {options, setOptions} = context;
   return {options, setOptions};
 }
+
+// export function useSelectedOption(id) {
+//   const context = useContext(OptionListContext);
+//   const {options, setOptions} = context;
+
+//   const index = options.indexOf(options.find((option) => option.id == id));
+
+//   const [selectedOption, setSelectedOption] = useState(index)
+
+//   return [selectedOption, setSelectedOption];
+// }
 
 export function useResult() {
   const context = useContext(OptionListContext);

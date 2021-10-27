@@ -6,7 +6,7 @@ const Role = require('../models/Role');
 const Permission = require('../models/Permission');
 const Option = require('../models/Option');
 const Experiment = require('../models/Experiment');
-
+const UserAnswers = require('../models/UserAnswers');
 
 const connection = new Sequelize(dbConfig);
 
@@ -15,6 +15,7 @@ Role.init(connection);
 Permission.init(connection);
 Option.init(connection);
 Experiment.init(connection);
+UserAnswers.init(connection);
 
 User.associate(connection.models);
 Role.associate(connection.models);

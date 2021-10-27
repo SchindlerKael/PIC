@@ -32,7 +32,7 @@ export const Checkbox = ({ label, value, checked, onChange, name }) => {
   );
 };
 
-const { array, string, func, bool } = PropTypes
+const { array, func } = PropTypes
 
 Input.propTypes = {
   onChange: func,

@@ -1,8 +1,6 @@
 import React from "react";
 import { Chart } from "react-google-charts";
 
-import {useResult} from '../../hooks/optionList.hook';
-
 import "./styles.css";
 
 export default (props) => {
@@ -11,6 +9,7 @@ export default (props) => {
     const result = props.result;
     const answer = props.answer;
     const checkResult = props.checkResult;
+    const checkAnswer = props.checkAnswer;
 
     const initialValue = props.initial_value;
     const expectedRate = props.expected_rate;
@@ -58,15 +57,14 @@ export default (props) => {
             return array.concat([null, null]);
         });
 
-        if(answer.length !== 0 && checkResult) {
-            console.log(answer)
+        if(answer.length !== 0 && (checkResult || checkAnswer)) {
             const answerWeight = answer.reduce(WeightCalculation, 0);
             const resultnWeight = result.reduce(WeightCalculation, 0);
 
             for(let i = 0; i < pointsOnChart/3; i++ ) {
-                const answerPoint = chartFunction(body[body.length-1][2], answerWeight);
-                const resultPoint = chartFunction(body[body.length-1][3], resultnWeight);
-            body.push([body.length, null, answerPoint.toFixed(3), resultPoint.toFixed(3)]);
+                const answerPoint = checkAnswer ? chartFunction(body[body.length-1][2], answerWeight): null;
+                const resultPoint = checkResult ? chartFunction(body[body.length-1][3], resultnWeight) : null;
+                body.push([body.length, null, answerPoint, resultPoint]);
             }
         }
         return header.concat(body);

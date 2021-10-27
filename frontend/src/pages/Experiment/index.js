@@ -3,7 +3,6 @@ import React, {useState, useEffect} from 'react';
 import './styles.css';
 
 import api from '../../services/api';
-import history from '../../history';
 
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -14,43 +13,53 @@ import FormContent from "../../components/FormContent";
 import Chart from "../../components/Chart";
 import OptionGroup from "../../components/OptionGroup";
 
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import {useOptionList, useResult, useAnswer} from '../../hooks/optionList.hook';
 
 const Main = (props) => {
     const { register, handleSubmit } = useForm();
-    const [hideResultButton, setHideResultButton] =  useState(true);
+    const [disabledAnswer, setDisabledAnswer] =  useState(false);
+    const [hideResult, setHideResult] =  useState(false);    
     const [checkResult, setCheckResult] =  useState(false);
 
     const {id} = props.match.params;
     const [experiment, setExperiment] = useState([]);
+    const [userAnswers, setUserAnswers] = useState([]);
     const {setOptions} = useOptionList();
     const result = useResult();
     const answer = useAnswer();
 
     useEffect(() => {
         (async () => {
-            const { data } = await api.get(`/experiments/${id}`);
-            setExperiment(data);
+            const { data: {experiment, answers} } = await api.get(`/experiments/${id}`);
+            setExperiment(experiment);
+            setUserAnswers(answers.map(answer => answer.option_id ));
+            setDisabledAnswer(answers.length > 0 ? true : false);
         })();
     }, [id]);
     
     useEffect(() => {
         if(experiment.options){
             setOptions(experiment.options.map((option) => {
-                option.used = false;
+                option.used = userAnswers.find(answer => answer === option.id) ? true : false;
                 return option
             }));
         }
-    }, [experiment.options]);
+    }, [experiment.options, userAnswers]);
+
+
+    const optionGroups = result.map((value, i) => (
+        <div key={i.toString()}>
+            <OptionGroup {...register(`options[${i}]`)} teste={userAnswers[i]} label={"B"+(i+1)} />
+        </div>
+    ))
 
     const onSubmit = async data => {
-        console.log(data);
         try {
             const res = await api.post(`/experiments/${id}/answer`, data);
             if(res){
                 alert( "Experimento Respondido!" );
-                setHideResultButton(false);
+                setDisabledAnswer(true);
             }
             
         } catch (error) {
@@ -69,17 +78,15 @@ const Main = (props) => {
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="option-groups">
-                        {result.map((value, i) => {
-                            return <OptionGroup {...register(`options[${i}]`)} label={"B"+(i+1)} />
-                        })}
+                        {optionGroups}
                     </div>
                     <div className="button-content">
-                        <Button label="Enviar" onClick={() => null} submit={true}/>
+                        <Button label="Responder" submit={true} disabled={disabledAnswer}/>
                     </div>
                 </form>
             </FormContent>
             <div className="item view-content">
-                {!hideResultButton && 
+                {disabledAnswer && 
                 <ToggleButton 
                     label1="Conferir Resposta" 
                     label2="Ocultar Resposta" 
@@ -93,7 +100,8 @@ const Main = (props) => {
                     event_rate = {experiment.event_rate}
                     answer={answer} 
                     result={result}
-                    checkResult={checkResult} 
+                    checkResult={checkResult}
+                    checkAnswer={disabledAnswer}
                 />
             </div>
         </Container>

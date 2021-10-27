@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 import Button from "../../components/Button/index";
 
@@ -9,31 +9,40 @@ import "./styles.css";
 
 const OptionGroup = (props) => {
 
+  const findIndexById = (options, id) => {
+    return options.indexOf(options.find((option) => option.id === id));
+  }
+
   const [{ dropdown }, toggleDropdown] = useDropDown();
 
   const {options, setOptions} = useOptionList();
 
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(-1);
 
-  const handleUpdateList  = (i) => {
+  useEffect(() => {
+    const index = findIndexById(options, props.teste);
+    setSelectedOption(index);
+  }, []);
+
+  const handleUpdateList = (i) => {
     let rows = options;
-    if(selectedOption != null)
+    if(selectedOption !== -1)
       rows[selectedOption].used = !rows[selectedOption].used;
-
+    
     rows[i].used = !rows[i].used;
     setOptions(rows);
     setSelectedOption(i);
   }
 
   return (
-
     <div className="option">
+      {/* <h1>{selectedOption}</h1> */}
       <div className="option-header">
         <Button label={props.label} onClick={toggleDropdown} />
-        <label>{selectedOption != null && options[selectedOption].name}</label>
+        <label>{selectedOption !== -1 && options[selectedOption].name}</label>
       </div>
         
-      <div /*ref={dropdownRef}*/ className={`${dropdown} options-list`}>       
+      <div className={`${dropdown} options-list`}>       
         <ul>
           {options.map((option, i) => {
             const id = `${props.label}-${i}`;
@@ -45,6 +54,7 @@ const OptionGroup = (props) => {
                   type="radio" 
                   id={id}                  
                   value={option.id}
+                  checked={option.id === props.teste ? true : false}
                 />
               </li>
             )

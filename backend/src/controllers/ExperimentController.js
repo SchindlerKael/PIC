@@ -2,6 +2,7 @@ const Experiment = require('../models/Experiment');
 const Sequelize = require('sequelize');
 const Option = require('../models/Option');
 const User = require('../models/User');
+const UserAnswers = require('../models/UserAnswers');
 
 module.exports = {
     async index(req, res) {
@@ -25,8 +26,9 @@ module.exports = {
 
     async getExperiment(req, res) {
         const { experiment_id } = req.params;
+        const user_id = req.user_id;
 
-        const experiments = await Experiment.findOne({
+        const experiment = await Experiment.findOne({
             where: {
                 id: experiment_id,
             },
@@ -39,8 +41,15 @@ module.exports = {
                 through: { attributes: ['weight', 'correct_answer'] },
             }],
         });
-    
-        return res.json(experiments);
+
+        const answers = await UserAnswers.findAll({
+            attributes: ['option_id'],
+            where: {
+                [Sequelize.Op.and]: [{ experiment_id }, { user_id }],
+            }
+        })
+
+        return res.json({experiment, answers});
     },
 
     async store(req, res) {

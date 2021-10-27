@@ -31,7 +31,6 @@ module.exports = {
         try {
             const { email, password } =  req.body;
 
-            // const user = await User.findOne({where: { email: email }});
             const user = await User.findOne({
                 attributes: ['id', 'name', 'email', 'password'],
                 where: { email: email },
