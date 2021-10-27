@@ -9,20 +9,23 @@ import "./styles.css";
 
 const OptionGroup = (props) => {
 
-  const findIndexById = (options, id) => {
-    return options.indexOf(options.find((option) => option.id === id));
-  }
-
   const [{ dropdown }, toggleDropdown] = useDropDown();
 
   const {options, setOptions} = useOptionList();
 
   const [selectedOption, setSelectedOption] = useState(-1);
 
+  const findIndexById = (id) => {
+    console.log(options);
+    console.log(options.indexOf(options.find((option) => option.id === id)));
+    console.log(id);
+    return options.indexOf(options.find((option) => option.id === id));
+  }
+
   useEffect(() => {
-    const index = findIndexById(options, props.teste);
+    const index = findIndexById(props.teste);
     setSelectedOption(index);
-  }, []);
+  }, [props.teste]);
 
   const handleUpdateList = (i) => {
     let rows = options;
@@ -36,7 +39,6 @@ const OptionGroup = (props) => {
 
   return (
     <div className="option">
-      {/* <h1>{selectedOption}</h1> */}
       <div className="option-header">
         <Button label={props.label} onClick={toggleDropdown} />
         <label>{selectedOption !== -1 && options[selectedOption].name}</label>
